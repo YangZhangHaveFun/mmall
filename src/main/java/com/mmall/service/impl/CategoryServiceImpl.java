@@ -36,7 +36,7 @@ public class CategoryServiceImpl implements ICategoryService {
         category.setStatus(true);
 
         int rowCount = categoryMapper.insert(category);
-        if(rowCount > 1){
+        if(rowCount > 0){
             return ServerResponse.createBySuccess("Create Category succeeded!");
         }
         return ServerResponse.createByErrorMessage("Create Category failed!");
@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
         int rowCount = categoryMapper.updateByPrimaryKeySelective(category);
 
-        if(rowCount > 1){
+        if(rowCount > 0){
             return ServerResponse.createBySuccess("Update Category succeeded!");
         }
         return ServerResponse.createByErrorMessage("Update Category failed!");
@@ -73,7 +73,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @param categoryId
      * @return
      */
-    public ServerResponse selectCategoryAndChildrenById(Integer categoryId){
+    public ServerResponse<List<Integer>> selectCategoryAndChildrenById(Integer categoryId){
         Set<Category>categorySet = Sets.newHashSet();
         findChildCategory(categorySet, categoryId);
 
