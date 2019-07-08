@@ -33,7 +33,7 @@ public class RedisShardedPool {
 
 
 
-    private static void initPool(){
+    private static void initPool() {
         JedisPoolConfig config = new JedisPoolConfig();
 
         config.setMaxTotal(maxTotal);
@@ -45,28 +45,30 @@ public class RedisShardedPool {
 
         config.setBlockWhenExhausted(true);//连接耗尽的时候，是否阻塞，false会抛出异常，true阻塞直到超时。默认为true。
 
-        JedisShardInfo info1 = new JedisShardInfo(redis1Ip,redis1Port,1000*2);
-
-        JedisShardInfo info2 = new JedisShardInfo(redis2Ip,redis2Port,1000*2);
+        JedisShardInfo info1 = new JedisShardInfo(redis1Ip, redis1Port, 1000 * 2);
+        JedisShardInfo info2 = new JedisShardInfo(redis2Ip, redis2Port, 1000 * 2);
 
         List<JedisShardInfo> jedisShardInfoList = new ArrayList<JedisShardInfo>(2);
 
         jedisShardInfoList.add(info1);
         jedisShardInfoList.add(info2);
 
-        pool = new ShardedJedisPool(config,jedisShardInfoList, Hashing.MURMUR_HASH, Sharded.DEFAULT_KEY_TAG_PATTERN);
+        pool = new ShardedJedisPool(config, jedisShardInfoList, Hashing.MURMUR_HASH, Sharded.DEFAULT_KEY_TAG_PATTERN);
     }
 
     static{
         initPool();
     }
 
-    public static ShardedJedis getJedis(){
+    public static ShardedJedis getJedis() {
         return pool.getResource();
     }
 
+    public static void returnResource(ShardedJedis jedis) {
+        pool.returnResource(jedis);
+    }
 
-    public static void returnBrokenResource(ShardedJedis jedis){
+    public static void returnBrokenResource(ShardedJedis jedis) {
         pool.returnBrokenResource(jedis);
     }
 
