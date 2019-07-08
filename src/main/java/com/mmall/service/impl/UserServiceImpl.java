@@ -100,12 +100,11 @@ public class UserServiceImpl implements IUserService {
         if(resultCount>0){
             //说明问题及问题答案是这个用户的,并且是正确的
             String forgetToken = UUID.randomUUID().toString();
-            RedisShardedPoolUtil.setEx(Const.TOKEN_PREFIX+username,forgetToken, 60*60*12);
+            RedisShardedPoolUtil.setEx(Const.TOKEN_PREFIX+username,forgetToken,60*60*12);
             return ServerResponse.createBySuccess(forgetToken);
         }
         return ServerResponse.createByErrorMessage("问题的答案错误");
     }
-
 
 
     public ServerResponse<String> forgetResetPassword(String username,String passwordNew,String forgetToken){
@@ -184,6 +183,9 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createBySuccess(user);
 
     }
+
+
+
 
     //backend
 

@@ -8,32 +8,39 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * Created by geely
+ */
 @Component
 @Slf4j
 public class RedissonManager {
+
     private Config config = new Config();
 
     private Redisson redisson = null;
-
-    private static String redis1Ip = PropertiesUtil.getProperty("redis_1.ip");
-    private static Integer redis1Port = Integer.parseInt(PropertiesUtil.getProperty("redis_1.port"));
-    private static String redis2Ip = PropertiesUtil.getProperty("redis_2.ip");
-    private static Integer redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis_2.port"));
 
     public Redisson getRedisson() {
         return redisson;
     }
 
+    private static String redis1Ip = PropertiesUtil.getProperty("redis1.ip");
+    private static Integer redis1Port = Integer.parseInt(PropertiesUtil.getProperty("redis1.port"));
+    private static String redis2Ip = PropertiesUtil.getProperty("redis2.ip");
+    private static Integer redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis2.port"));
+
     @PostConstruct
     private void init(){
-        config.useSingleServer().setAddress(new StringBuilder().append(redis1Ip).append(":").append(redis1Port).toString());
-
         try {
+            config.useSingleServer().setAddress(new StringBuilder().append(redis1Ip).append(":").append(redis1Port).toString());
+
             redisson = (Redisson) Redisson.create(config);
-            log.info("Redission init successfully.");
+
+            log.info("初始化Redisson结束");
         } catch (Exception e) {
-            log.error("Redission init failed.", e);
-            e.printStackTrace();
+            log.error("redisson init error",e);
         }
     }
+
+
+
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.Date;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,4 +28,6 @@ public class PayInfo {
     private Date createTime;
 
     private Date updateTime;
+
+
 }

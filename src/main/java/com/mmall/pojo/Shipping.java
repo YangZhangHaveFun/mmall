@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.util.Date;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -36,5 +35,6 @@ public class Shipping {
     private Date createTime;
 
     private Date updateTime;
+
 
 }

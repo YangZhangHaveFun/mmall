@@ -10,8 +10,8 @@ import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class OrderItem {
     private Integer id;
 
@@ -34,5 +34,6 @@ public class OrderItem {
     private Date updateTime;
 
     private Integer userId;
+
 
 }
