@@ -73,12 +73,6 @@ public class RedisShardedPool {
     }
 
 
-
-    public static void returnResource(ShardedJedis jedis){
-        pool.returnResource(jedis);
-    }
-
-
     public static void main(String[] args) {
         ShardedJedis jedis = pool.getResource();
 
