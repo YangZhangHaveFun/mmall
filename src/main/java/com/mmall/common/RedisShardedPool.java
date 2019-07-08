@@ -30,7 +30,7 @@ public class RedisShardedPool {
     private static Integer redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis_2.port"));
 
 
-    private static void initPool(){
+    private static void initPool() {
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(maxTotal);
         config.setMaxIdle(maxIdle);
@@ -41,30 +41,30 @@ public class RedisShardedPool {
         //If block when connections meet the max value.
         config.setBlockWhenExhausted(true);
 
-        JedisShardInfo info1 = new JedisShardInfo(redis1Ip,redis1Port,1000*2);
-        JedisShardInfo info2 = new JedisShardInfo(redis2Ip,redis2Port,1000*2);
+        JedisShardInfo info1 = new JedisShardInfo(redis1Ip, redis1Port, 1000 * 2);
+        JedisShardInfo info2 = new JedisShardInfo(redis2Ip, redis2Port, 1000 * 2);
 
         List<JedisShardInfo> jedisShardInfoList = new ArrayList<>(2);
 
         jedisShardInfoList.add(info1);
         jedisShardInfoList.add(info2);
 
-        pool = new ShardedJedisPool(config,jedisShardInfoList, Hashing.MURMUR_HASH, Sharded.DEFAULT_KEY_TAG_PATTERN);
+        pool = new ShardedJedisPool(config, jedisShardInfoList, Hashing.MURMUR_HASH, Sharded.DEFAULT_KEY_TAG_PATTERN);
     }
 
     static {
         initPool();
     }
 
-    public static ShardedJedis getJedis(){
+    public static ShardedJedis getJedis() {
         return pool.getResource();
     }
 
-    public static void returnResource(ShardedJedis jedis){
+    public static void returnResource(ShardedJedis jedis) {
         pool.returnResource(jedis);
     }
 
-    public static void returnBrokenResource(ShardedJedis jedis){
+    public static void returnBrokenResource(ShardedJedis jedis) {
         pool.returnBrokenResource(jedis);
     }
 
